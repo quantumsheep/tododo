@@ -1,5 +1,5 @@
 {
-  "name": "tododo",
+  "name": "tododo-server",
   "version": "1.0.0",
   "description": "Todo list using TDD, including CI and CD configurations - Ready for Docker and Heroku",
   "main": "src/app.js",
