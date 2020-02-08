@@ -1,0 +1,23 @@
+{
+  "name": "tododo",
+  "version": "1.0.0",
+  "description": "Todo list using TDD, including CI and CD configurations - Ready for Docker and Heroku",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quantumsheep/tododo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/quantumsheep/tododo/issues"
+  },
+  "homepage": "https://github.com/quantumsheep/tododo#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
