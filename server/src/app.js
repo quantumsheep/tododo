@@ -1,6 +1,12 @@
 const express = require('express')
 const app = express()
 
+app.set('trust proxy', true)
+
+const body_parser = require('body-parser')
+app.use(body_parser.urlencoded({ extended: false }))
+app.use(body_parser.json())
+
 const routes = require('./routes')
 app.use(routes)
 
