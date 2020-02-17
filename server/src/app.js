@@ -1,3 +1,5 @@
+const path = require('path')
+
 const express = require('express')
 const app = express()
 
@@ -12,6 +14,9 @@ app.use(body_parser.json())
 
 const routes = require('./routes')
 app.use(routes)
+
+const client = path.resolve(__dirname, '../..', 'client/build')
+app.use(express.static(client))
 
 app.use('*', (req, res) => {
   res.status(404).send({

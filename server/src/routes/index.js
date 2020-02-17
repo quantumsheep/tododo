@@ -1,6 +1,8 @@
 const router = require('express').Router()
 module.exports = router
 
-router.get('/', (req, res) => {
-  res.send("Hello, world!")
+router.get('/api', (req, res) => {
+  res.send({
+    name: 'Tododo',
+  })
 })

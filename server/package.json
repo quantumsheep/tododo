@@ -4,7 +4,8 @@
   "description": "Todo list using TDD, including CI and CD configurations - Ready for Docker and Heroku",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "dev": "nodemon"
   },
   "repository": {
     "type": "git",
