@@ -5,7 +5,8 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node .",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "test": "jest --runInBand ./test"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,12 @@
     "glob": "^7.1.6",
     "helmet": "^3.21.2",
     "mongoose": "^5.9.0"
-  }
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "mongodb-memory-server": "^6.2.4"
+  },
+  "jest": {
+    "testEnvironment": "node"
+}
 }
