@@ -4,8 +4,9 @@
   "description": "Todo list using TDD, including CI and CD configurations - Ready for Docker and Heroku",
   "main": "src/app.js",
   "scripts": {
-    "start": "node .",
-    "dev": "nodemon"
+    "start": "babel-node .",
+    "dev": "nodemon --exec babel-node .",
+    "test": "jest --runInBand ./tests"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,20 @@
     "glob": "^7.1.6",
     "helmet": "^3.21.2",
     "mongoose": "^5.9.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "babel-jest": "^25.1.0",
+    "jest": "^25.1.0",
+    "mongodb-memory-server": "^6.2.4"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
