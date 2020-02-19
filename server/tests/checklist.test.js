@@ -17,7 +17,7 @@ afterEach(async () => await db.clear_database())
 afterAll(async () => await db.close_database())
 
 /**
- * Product test suite.
+ * Checklist test suite.
  */
 describe('checklist', () => {
 
