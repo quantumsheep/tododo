@@ -1,19 +1,20 @@
-const path = require('path')
+import path from 'path'
+import express from 'express'
+import helmet from 'helmet'
+import body_parser from 'body-parser'
 
-const express = require('express')
+import * as routes from './routes'
+
 const app = express()
 
 app.set('trust proxy', true)
 
-const helmet = require('helmet')
 app.use(helmet())
 
-const body_parser = require('body-parser')
 app.use(body_parser.urlencoded({ extended: false }))
 app.use(body_parser.json())
 
-const routes = require('./routes')
-app.use(routes)
+app.use(Object.values(routes))
 
 const client = path.resolve(__dirname, '../..', 'client/build')
 app.use(express.static(client))
