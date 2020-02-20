@@ -1,4 +1,4 @@
-import db, { memory_server, connect as db_connect } from "../src/db";
+import db, { memory_server, connect as db_connect } from "../src/db"
 import * as checklist from '../src/models/checklist'
 
 /**
@@ -36,7 +36,7 @@ describe('checklist', () => {
         return expect(checklist.model.create({
             title: 'tototo',
         })).resolves.not.toThrow()
-    });
+    })
 
     /**
      * Tests that a valid checklist can be updated through the productService without throwing any errors.
@@ -48,7 +48,7 @@ describe('checklist', () => {
         }, {
             checked: true,
         })).resolves.not.toThrow()
-    });
+    })
 
     /**
      * Tests that a valid checklist can be deleted through the productService without throwing any errors.
@@ -58,5 +58,5 @@ describe('checklist', () => {
         return expect(checklist.model.deleteMany({
             title: 'tototo',
         })).resolves.not.toThrow()
-    });
-});
+    })
+})
