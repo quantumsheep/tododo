@@ -4,6 +4,15 @@ export default router
 
 import * as checklists from '../models/checklist'
 
+router.get('/api/todolist', async (req, res) => {
+  const todolists = await checklists.model.find()
+
+  res.send({
+    success: true,
+    todolists,
+  })
+})
+
 router.get('/api/todolist/:id', async (req, res) => {
   try {
     const todolist = await checklists.model.findById(req.params.id)
@@ -23,4 +32,14 @@ router.get('/api/todolist/:id', async (req, res) => {
       errors: ["id is not valid."],
     })
   }
+})
+
+router.post('/api/todolist', async (req, res) => {
+  await checklists.model.create({
+    title: req.query.title
+  })
+
+  res.send({
+    success: true,
+  })
 })
