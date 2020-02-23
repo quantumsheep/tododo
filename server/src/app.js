@@ -5,7 +5,7 @@ import body_parser from 'body-parser'
 
 import * as routes from './routes'
 
-const app = express()
+export const app = express()
 
 app.set('trust proxy', true)
 
@@ -25,5 +25,7 @@ app.use('*', (req, res) => {
   })
 })
 
-const port = process.env.PORT || 3000
-app.listen(port, () => console.log(`Running on http://localhost:${port}`))
+if (process.env.JEST_WORKER_ID === undefined) {
+  const port = process.env.PORT || 3000
+  app.listen(port, () => console.log(`Running on http://localhost:${port}`))
+}
