@@ -35,8 +35,15 @@ router.get('/api/todolist/:id', async (req, res) => {
 })
 
 router.post('/api/todolist', async (req, res) => {
+  if (!req.body?.title) {
+    return res.send({
+      success: false,
+      errors: ["title is required"],
+    })
+  }
+
   await todolists.model.create({
-    title: req.query.title
+    title: req.body.title
   })
 
   res.send({
