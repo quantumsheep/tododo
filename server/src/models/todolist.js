@@ -7,7 +7,7 @@ const Task = new Schema({
   checked: { type: Boolean, default: false, },
 })
 
-export const model = db.model('Checklist', {
+export const model = db.model('Todolist', {
   title: { type: String, required: true, },
   checked: { type: Boolean, default: false, },
   tasks: { type: [Task], default: [], },

@@ -1,5 +1,5 @@
 import db, { memory_server, connect as db_connect } from "../src/db"
-import * as checklist from '../src/models/checklist'
+import * as todolist from '../src/models/todolist'
 
 /**
  * Connect to a new in-memory database before running any tests.
@@ -24,38 +24,29 @@ afterAll(async () => {
 })
 
 /**
- * Checklist test suite.
+ * Todolist test suite.
  */
-describe('checklist', () => {
+describe('todolist', () => {
 
-    /**
-     * Tests that a valid checklist can be created through the checklist_service without throwing any errors.
-     */
     it('can be created correctly', () => {
         expect.assertions(1)
-        return expect(checklist.model.create({
+        return expect(todolist.model.create({
             title: 'tototo',
         })).resolves.not.toThrow()
     })
 
-    /**
-     * Tests that a valid checklist can be updated through the productService without throwing any errors.
-     */
     it('can be updated correctly', () => {
         expect.assertions(1)
-        return expect(checklist.model.updateMany({
+        return expect(todolist.model.updateMany({
             title: 'tototo',
         }, {
             checked: true,
         })).resolves.not.toThrow()
     })
 
-    /**
-     * Tests that a valid checklist can be deleted through the productService without throwing any errors.
-     */
     it('can be deleted correctly', () => {
         expect.assertions(1)
-        return expect(checklist.model.deleteMany({
+        return expect(todolist.model.deleteMany({
             title: 'tototo',
         })).resolves.not.toThrow()
     })

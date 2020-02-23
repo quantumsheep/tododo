@@ -2,10 +2,10 @@ import { Router } from 'express'
 const router = Router()
 export default router
 
-import * as checklists from '../models/checklist'
+import * as todolists from '../models/todolist'
 
 router.get('/api/todolist', async (req, res) => {
-  const todolists = await checklists.model.find()
+  const todolists = await todolists.model.find()
 
   res.send({
     success: true,
@@ -15,7 +15,7 @@ router.get('/api/todolist', async (req, res) => {
 
 router.get('/api/todolist/:id', async (req, res) => {
   try {
-    const todolist = await checklists.model.findById(req.params.id)
+    const todolist = await todolists.model.findById(req.params.id)
 
     res.send({
       success: true,
@@ -35,7 +35,7 @@ router.get('/api/todolist/:id', async (req, res) => {
 })
 
 router.post('/api/todolist', async (req, res) => {
-  await checklists.model.create({
+  await todolists.model.create({
     title: req.query.title
   })
 
