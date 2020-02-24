@@ -5,11 +5,10 @@ export default router
 import * as todolists from '../models/todolist'
 
 router.get('/api/todolist', async (req, res) => {
-  const todolists = await todolists.model.find()
 
   res.send({
     success: true,
-    todolists,
+    todolists: await todolists.model.find(),
   })
 })
 
