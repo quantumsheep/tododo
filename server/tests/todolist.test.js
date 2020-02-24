@@ -25,4 +25,15 @@ describe('Endpoints for a todolist', () => {
     expect(res.body).toHaveProperty("errors")
     expect(res.body.success).toBe(false)
   })
+
+  it('should get all the todolists', async () => {
+    const res = await request
+      .get('/api/todolist')
+      .send()
+    
+    expect(res.statusCode).toBe(200)
+    expect(res.body).toHaveProperty("success")
+    expect(res.body.success).toBe(true)
+    expect(res.body).toHaveProperty("todolists")
+  })
 })
