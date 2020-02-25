@@ -41,11 +41,21 @@ router.post('/api/todolist', async (req, res) => {
     })
   }
 
+  const check = await todolists.model.find({ title: req.body.title })
+  if (check.length > 1) {
+    return res.send({
+      success: false,
+      errors: ["the todolist already exists"],
+    })
+  }
+
   await todolists.model.create({
     title: req.body.title
   })
-
-  res.send({
-    success: true,
-  })
+    .then((todolist) => {
+      res.send({
+        success: true,
+        id: todolist._id
+      })
+    })
 })
