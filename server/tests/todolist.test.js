@@ -4,7 +4,7 @@ import * as todolists from '../src/models/todolist'
 
 const request = supertest(app)
 
-describe('Endpoints for a todolist', () => {
+describe('Endpoints for todolist', () => {
 
   it('should create a new todolist', async () => {
     const res = await request
@@ -61,6 +61,32 @@ describe('Endpoints for a todolist', () => {
     expect(res.body).toHaveProperty('todolists')
     expect(Array.isArray(res.body.todolists)).toBe(true)
     expect(res.body.todolists.length).toBe(2)
+  })
+
+  it('should delete a specific todo', async () => {
+    const res = await request
+      .post('/api/todolist')
+      .send({
+        title: 'test 3',
+      })
+
+    const result = await request
+      .delete('/api/todolist')
+      .send({
+        id: res.body.id,
+      })
+
+    expect(result.statusCode).toBe(200)
+    expect(result.body).toHaveProperty('success')
+    expect(result.body.success).toBe(true)
+
+    const check = await request
+      .get(`/api/todolist/${res.body.id}`)
+      .send()
+
+    expect(check.statusCode).toBe(200)
+    expect(check.body).toHaveProperty('success')
+    expect(check.body.success).toBe(false)
   })
 
 })
