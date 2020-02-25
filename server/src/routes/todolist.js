@@ -8,7 +8,13 @@ router.get('/api/todolist', async (req, res) => {
 
   res.send({
     success: true,
-    todolists: await todolists.model.find(),
+    todolists: (await todolists.model.find()).map(todolist => ({
+      id: todolist._id,
+      title: todolist.title,
+      tasks: todolist.tasks,
+      checked: todolist.checked,
+      created: todolist.created,
+    })),
   })
 })
 
@@ -19,6 +25,7 @@ router.get('/api/todolist/:id', async (req, res) => {
     res.send({
       success: true,
       todolist: {
+        id: todolist._id,
         title: todolist.title,
         checked: todolist.checked,
         tasks: todolist.tasks,
