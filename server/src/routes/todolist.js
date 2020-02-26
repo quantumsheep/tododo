@@ -68,17 +68,16 @@ router.post('/api/todolist', async (req, res) => {
 })
 
 router.delete('/api/todolist/:id', async (req, res) => {
-  if(!req.params.id) {
+  if (!req.params.id) {
     return res.send({
       success: false,
-      errros: ["id is required"],
+      errors: ["id is required"],
     })
   }
 
   await todolists.model.findByIdAndDelete(req.params.id)
-    .then(() => {
-      res.send({
-        success: true,
-      })
-    })
+
+  res.send({
+    success: true,
+  })
 })
