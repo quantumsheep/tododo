@@ -12,3 +12,13 @@ Tododo lets you create todo-lists for tasks tracking and management.
 On the technique side it uses React for the front-end and Node for the back-end (also called API here).
 
 Tests are made with Jest and done automatically on Pull Requests.
+
+# Contribute
+A specific environment has been made to ease the development of the application. It can be launched using `docker-compose` command from [Docker's CLI](https://www.docker.com/).
+
+```bash
+docker-compose build
+docker-compose up
+```
+
+It will use local `client` and `server` files and automatically takes code changes.
