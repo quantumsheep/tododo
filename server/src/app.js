@@ -20,9 +20,7 @@ const client = path.resolve(__dirname, '../..', 'client/build')
 app.use(express.static(client))
 
 app.use('*', (req, res) => {
-  res.status(404).send({
-    error: '404 Not Found',
-  })
+  res.sendFile(path.resolve(client, 'index.html'))
 })
 
 if (process.env.JEST_WORKER_ID === undefined) {
