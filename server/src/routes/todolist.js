@@ -62,7 +62,13 @@ router.post('/api/todolist', async (req, res) => {
     .then((todolist) => {
       res.send({
         success: true,
-        id: todolist._id
+        todolist: {
+          id: todolist._id,
+          title: todolist.title,
+          checked: todolist.checked,
+          tasks: todolist.tasks,
+          created: todolist.created,
+        }
       })
     })
 })

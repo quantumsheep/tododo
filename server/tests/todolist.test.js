@@ -37,10 +37,10 @@ describe('Endpoints for todolist', () => {
     expect(res.statusCode).toEqual(200)
     expect(res.body).toHaveProperty('success')
     expect(res.body.success).toBe(true)
-    expect(res.body).toHaveProperty('id')
+    expect(res.body.todolist).toHaveProperty('id')
 
     const result = await request
-      .get(`/api/todolist/${res.body.id}`)
+      .get(`/api/todolist/${res.body.todolist.id}`)
       .send()
 
     expect(result.statusCode).toBe(200)
@@ -71,7 +71,7 @@ describe('Endpoints for todolist', () => {
       })
 
     const result = await request
-      .delete(`/api/todolist/${res.body.id}`)
+      .delete(`/api/todolist/${res.body.todolist.id}`)
       .send()
 
     expect(result.statusCode).toBe(200)
