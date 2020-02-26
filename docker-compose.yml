@@ -1,12 +1,47 @@
-version: "2"
+version: "3"
 services:
+  client:
+    build: ./client
+    container_name: tododo-client
+    volumes:
+      - ./client:/usr/src/app/client
+      - /usr/src/app/client/node_modules
+    networks:
+      - tododo
+    environment:
+      - NODE_ENV=development
   server:
-    build: .
+    build: ./server
+    container_name: tododo-server
+    volumes:
+      - ./server:/usr/src/app/server
+      - ./client:/usr/src/app/client
+      - /usr/src/app/server/node_modules
+    networks:
+      - tododo
+    command: npm run dev
+    environment:
+      NODE_ENV: development
     ports:
       - "3000:3000"
     depends_on:
       - mongo
+      - client
+    links:
+      - mongo
+      - client
   mongo:
     image: mongo
+    container_name: tododo-mongo
+    volumes:
+      - ./db:/data/db
+    networks:
+      - tododo
     ports:
       - "27017:27017"
+
+volumes:
+  static:
+
+networks:
+  tododo:
