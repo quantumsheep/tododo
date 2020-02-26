@@ -3,6 +3,7 @@ const router = Router()
 export default router
 
 import * as todolists from '../models/todolist'
+import { todolist } from '../routes'
 
 router.get('/api/todolist', async (req, res) => {
 
@@ -84,6 +85,28 @@ router.delete('/api/todolist/:id', async (req, res) => {
   await todolists.model.findByIdAndDelete(req.params.id)
 
   res.send({
+    success: true,
+  })
+})
+
+router.post('/api/todolist/modify/:id', async (req, res) => {
+  if (!req.params.id) {
+    return res.send({
+      success: false,
+      error: ["id is required"],
+    })
+  }
+
+  if (!req.body.title) {
+    return res.send({
+      success: false,
+      error: ["title is required"],
+    })
+  }
+
+  await todolists.model.findByIdAndUpdate(req.params.id, { title: req.body.title })
+
+  return res.send({
     success: true,
   })
 })
