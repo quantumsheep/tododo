@@ -49,7 +49,7 @@ router.post('/api/todolist', async (req, res) => {
   }
 
   const check = await todolists.model.find({ title: req.body.title })
-  if (check.length > 1) {
+  if (check.length >= 1) {
     return res.send({
       success: false,
       errors: ["the todolist already exists"],
