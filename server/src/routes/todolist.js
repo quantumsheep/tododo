@@ -48,11 +48,37 @@ router.post('/api/todolist', async (req, res) => {
     })
   }
 
+  const check = await todolists.model.find({ title: req.body.title })
+  if (check.length > 1) {
+    return res.send({
+      success: false,
+      errors: ["the todolist already exists"],
+    })
+  }
+
   await todolists.model.create({
     title: req.body.title
   })
+    .then((todolist) => {
+      res.send({
+        success: true,
+        id: todolist._id
+      })
+    })
+})
 
-  res.send({
-    success: true,
-  })
+router.delete('/api/todolist', async (req, res) => {
+  if(!req.body?.id) {
+    return res.send({
+      success: false,
+      errros: ["id is required"],
+    })
+  }
+
+  await todolists.model.findByIdAndDelete(req.body.id)
+    .then(() => {
+      res.send({
+        success: true,
+      })
+    })
 })
