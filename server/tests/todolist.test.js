@@ -71,10 +71,8 @@ describe('Endpoints for todolist', () => {
       })
 
     const result = await request
-      .delete('/api/todolist')
-      .send({
-        id: res.body.id,
-      })
+      .delete(`/api/todolist/${res.body.id}`)
+      .send()
 
     expect(result.statusCode).toBe(200)
     expect(result.body).toHaveProperty('success')
