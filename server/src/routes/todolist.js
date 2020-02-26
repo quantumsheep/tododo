@@ -89,18 +89,18 @@ router.delete('/api/todolist/:id', async (req, res) => {
   })
 })
 
-router.post('/api/todolist/modify/:id', async (req, res) => {
+router.put('/api/todolist/:id', async (req, res) => {
   if (!req.params.id) {
     return res.send({
       success: false,
-      error: ["id is required"],
+      errors: ["id is required"],
     })
   }
 
   if (!req.body.title) {
     return res.send({
       success: false,
-      error: ["title is required"],
+      errors: ["title is required"],
     })
   }
 
