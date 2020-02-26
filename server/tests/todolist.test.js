@@ -87,4 +87,34 @@ describe('Endpoints for todolist', () => {
     expect(check.body.success).toBe(false)
   })
 
+  it('should update a specific todolist', async () => {
+    const res = await request
+      .post('/api/todolist')
+      .send({
+        title: 'test 4',
+      })
+
+    const result = await request
+      .put(`/api/todolist/${res.body.todolist.id}`)
+      .send({
+        title: 'title updated',
+      })
+
+    expect(result.statusCode).toBe(200)
+    expect(result.body).toHaveProperty('success')
+    expect(result.body.success).toBe(true)
+
+    const check = await request
+      .get(`/api/todolist/${res.body.todolist.id}`)
+      .send()
+
+    console.log(result.body)
+
+    expect(check.statusCode).toBe(200)
+    expect(check.body).toHaveProperty('success')
+    expect(check.body.success).toBe(true)
+    expect(check.body).toHaveProperty('todolist')
+    expect(check.body.todolist.title).toBe('title updated')
+  })
+
 })
