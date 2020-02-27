@@ -17,7 +17,7 @@ Tests are made with Jest and done automatically on Pull Requests.
 A specific environment has been made to ease the development of the application. It can be launched using `docker-compose` command from [Docker's CLI](https://www.docker.com/).
 
 ```bash
-docker-compose build --no-cache
+docker-compose build
 docker-compose up
 ```
 
@@ -27,7 +27,7 @@ It will use local `client` and `server` files and automatically takes code chang
 For production we use a specific configuration of `docker-compose` but it's still very similar to the development environment.
 
 ```bash
-docker-compose build --no-cache
+docker-compose build
 docker-compose -f docker-compose.yml -f production.yml up -d
 ```
 
