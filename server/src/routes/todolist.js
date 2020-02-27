@@ -159,6 +159,12 @@ router.put('/api/todolist/:todolist_id/:task_id', async (req, res) => {
       errors: ["task id is required"],
     })
   }
+  else if (!req.body.title) {
+    return res.send({
+      success: false,
+      errors: ["title is required"],
+    })
+  }
 
   await todolists.model.findOneAndUpdate(
     { "_id": req.params.todolist_id, "tasks._id": req.params.task_id },
