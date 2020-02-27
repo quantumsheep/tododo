@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 class TodoList extends React.Component {
   state = {
     id: null,
+    task: null,
     /**
      * @type {Task[]}
      */
@@ -42,6 +43,7 @@ class TodoList extends React.Component {
       }, {})
 
       this.setState({
+        title: data.todolist.title,
         tasks: data.todolist.tasks,
         task_titles,
         task_checks,
@@ -135,7 +137,8 @@ class TodoList extends React.Component {
     const tasks = this.state.tasks || []
 
     return (
-      <div>
+      <div className="container">
+        Todolist : {this.state.title}
         {tasks.map(task => (
           <div key={task._id}>
             <form onSubmit={e => {

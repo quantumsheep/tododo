@@ -98,9 +98,10 @@ export default class Lists extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
+        Liste de Todolist : 
         {this.state.todolists.map(todolist => (
-          <div key={todolist.id} className="container">
+          <div key={todolist.id}>
             <form onSubmit={e => {
               e.preventDefault()
               this.change_todolist_name(todolist.id)
