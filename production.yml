@@ -1,0 +1,10 @@
+version: "3"
+services:
+  client:
+    command: npm run build
+    environment:
+      - NODE_ENV=development
+  server:
+    command: npm start
+    environment:
+      NODE_ENV: development
