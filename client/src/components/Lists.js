@@ -1,16 +1,18 @@
 import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+
 /**
- * @typedef TodoL
- * @property {string} title
- * @property {string} id
- * @property {boolean} checked
- */
+* @typedef TodoL
+* @property {string} title
+* @property {string} id
+* @property {boolean} checked
+* @property {Task[]} tasks
+*/
 
 export default class Lists extends React.Component {
   state = {
-    /** @type {TodoL[]} */
+    /** @type {TodoL} */
     todolists: [],
     new_todolist_title: "",
     todolist_titles: {},
@@ -19,13 +21,14 @@ export default class Lists extends React.Component {
   async componentDidMount() {
     try {
       const { data: { todolists } } = await axios.get('/api/todolist')
+      const todolist_titles = todolists.reduce((obj, todolist) => {
+        obj[todolist.id] = todolist.title
+        return obj
+      }, {})
 
       this.setState({
         todolists,
-        todolist_titles: todolists.reduce((obj, todolist) => {
-          obj[todolist.id] = todolist.title
-          return obj
-        }, {}),
+        todolist_titles,
       })
     } catch (e) {
       console.error(e)
@@ -102,7 +105,7 @@ export default class Lists extends React.Component {
               e.preventDefault()
               this.change_todolist_name(todolist.id)
             }}>
-              <input type="checkbox" value={todolist.checked} disabled={true}></input>
+              <input type="checkbox" checked={todolist.checked} disabled={true}></input>
               <input
                 type="text"
                 value={this.state.todolist_titles[todolist.id] || ""}
