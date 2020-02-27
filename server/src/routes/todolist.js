@@ -190,7 +190,7 @@ router.put('/api/todolist/:todolist_id/:task_id/check', async (req, res) => {
       errors: ["checked property is required"],
     })
   }
-  
+
   await todolists.model.findOneAndUpdate(
     { "_id": req.params.todolist_id, "tasks._id": req.params.task_id },
     {
@@ -217,16 +217,13 @@ router.delete('/api/todolist/:todolist_id/:task_id', async (req, res) => {
       errors: ["task id is required"],
     })
   }
-  
+
   try {
-    await todolists.model.findOneAndDelete(
-      { "_id": req.params.todolist_id, "tasks._id": req.params.task_id },
-      {
-        "$set": {
-          "tasks.$": req.params.task_id
-        }
-      })
-  
+    const todolist = await todolists.model.findById(req.params.todolist_id)
+
+    todolist.tasks.pull({ _id: req.params.task_id })
+    todolist.save();
+
     res.send({
       success: true,
     })
