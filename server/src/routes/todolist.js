@@ -49,14 +49,6 @@ router.post('/api/todolist', async (req, res) => {
     })
   }
 
-  const check = await todolists.model.find({ title: req.body.title })
-  if (check.length >= 1) {
-    return res.send({
-      success: false,
-      errors: ["the todolist already exists"],
-    })
-  }
-
   await todolists.model.create({
     title: req.body.title
   })
@@ -195,7 +187,7 @@ router.put('/api/todolist/:todolist_id/:task_id/check', async (req, res) => {
   else if (!req.body.checked && !typeof req.body.checked === "boolean") {
     return res.send({
       success: false,
-      errors: ["title is required"],
+      errors: ["checked property is required"],
     })
   }
   
