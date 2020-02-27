@@ -141,6 +141,22 @@ describe('Endpoints for todolist', () => {
       expect(check.statusCode).toBe(200)
       expect(check.body.todolist.tasks.length).toBe(1)
       expect(check.body.todolist.tasks[0]).toHaveProperty('title')
-      expect(check.body.todolist.tasks[0]).toBe('new task')
+      expect(check.body.todolist.tasks[0].title).toBe('new task')
+  })
+  
+  it('should not create a new task for a specific todolist if title is empty', async () => {
+    const res = await request
+      .post('/api/todolist')
+      .send({
+        title: 'test 6',
+      })
+    
+      const result = await request
+      .post(`/api/todolist/${res.body.todolist.id}`)
+      .send()
+
+      expect(result.statusCode).toBe(200)
+      expect(result.body).toHaveProperty('success')
+      expect(result.body.success).toBe(false)
   })
 })
