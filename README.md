@@ -48,3 +48,9 @@ docker run -p 3000:3000 --name tododo -d tododo
 ```
 
 It will need to access a MongoDB server from the port `27017`, you can provide it by changing the newly created container to a specific network if you have a MongoDB container. You can also create your own `docker-compose.yml` configuration that match your needs.
+
+# Tests
+We are using Continuous Integration service [Travis CI](https://travis-ci.org/) to automatically run our tests when creating a Pull Request.
+
+## Server
+Server-side tests are done by running `npm test` in the `server` directory. Those are made in the `server/tests` directory.
