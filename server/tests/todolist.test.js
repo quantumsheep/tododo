@@ -6,28 +6,6 @@ import * as todolist from '../src/models/todolist'
 const request = supertest(app)
 
 /**
- * Connect to a new in-memory database before running any tests.
- */
-beforeAll(async () => await db_connect())
-
-/**
- * Clear all test data after every test.
- */
-afterEach(async () => {
-    const collections = Object.values(db.connection.collections)
-    await Promise.all(collections.map(c => c.deleteMany()))
-})
-
-/**
- * Remove and close the db and server.
- */
-afterAll(async () => {
-    await db.connection.dropDatabase()
-    await db.connection.close()
-    await memory_server.stop()
-})
-
-/**
  * Todolist test suite.
  */
 describe('todolist', () => {
