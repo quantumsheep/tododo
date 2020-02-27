@@ -8,7 +8,7 @@ const Task = new Schema({
 })
 
 export const model = db.model('Todolist', {
-  title: { type: String, required: true, unique: true},
+  title: { type: String, required: true },
   checked: { type: Boolean, default: false, },
   tasks: { type: [Task], default: [], },
   created: { type: Date, default: Date.now, },
