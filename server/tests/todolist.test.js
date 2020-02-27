@@ -137,8 +137,10 @@ describe('Endpoints for todolist', () => {
       const check = await request
         .get(`/api/todolist/${res.body.todolist.id}`)
         .send()
-        
+
       expect(check.statusCode).toBe(200)
       expect(check.body.todolist.tasks.length).toBe(1)
+      expect(check.body.todolist.tasks[0]).toHaveProperty('title')
+      expect(check.body.todolist.tasks[0]).toBe('new task')
   })
 })
