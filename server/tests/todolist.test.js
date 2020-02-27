@@ -160,7 +160,7 @@ describe('Endpoints for todolist', () => {
     expect(result.body.success).toBe(false)
   })
 
-  it('should update new task for a specific todolist', async () => {
+  it('should update the title property of a task for a specific todolist', async () => {
     const res = await request
       .post('/api/todolist')
       .send({
@@ -174,7 +174,7 @@ describe('Endpoints for todolist', () => {
       })
 
     const res_update = await request
-      .put(`/api/todolist/${res.body.todolist.id}/${result.body.task.id}`)
+      .put(`/api/todolist/${res.body.todolist.id}/${result.body.task._id}`)
       .send({
         title: 'my new title',
       })
@@ -183,4 +183,51 @@ describe('Endpoints for todolist', () => {
     expect(res_update.body).toHaveProperty('success')
     expect(res_update.body.success).toBe(true)
   })
+
+  it('should update the checked property of a task for a specific todolist', async () => {
+    const res = await request
+      .post('/api/todolist')
+      .send({
+        title: 'test 8',
+      })
+
+    const result = await request
+      .post(`/api/todolist/${res.body.todolist.id}`)
+      .send({
+        title: 'new task',
+      })
+
+    const res_update = await request
+      .put(`/api/todolist/${res.body.todolist.id}/${result.body.task._id}/check`)
+      .send({
+        checked: true,
+      })
+
+    expect(res_update.statusCode).toBe(200)
+    expect(res_update.body).toHaveProperty('success')
+    expect(res_update.body.success).toBe(true)
+  })
+
+  it('should delete a task from a todolist', async () => {
+    const res = await request
+      .post('/api/todolist')
+      .send({
+        title: 'test 8',
+      })
+
+    const result = await request
+      .post(`/api/todolist/${res.body.todolist.id}`)
+      .send({
+        title: 'new task',
+      })
+
+    const res_update = await request
+      .delete(`/api/todolist/${res.body.todolist.id}/${result.body.task._id}`)
+      .send()
+
+    expect(res_update.statusCode).toBe(200)
+    expect(res_update.body).toHaveProperty('success')
+    expect(res_update.body.success).toBe(true)
+  })
+
 })
