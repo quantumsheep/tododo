@@ -221,13 +221,21 @@ describe('Endpoints for todolist', () => {
         title: 'new task',
       })
 
-    const res_update = await request
+    const res_delete = await request
       .delete(`/api/todolist/${res.body.todolist.id}/${result.body.task._id}`)
       .send()
 
-    expect(res_update.statusCode).toBe(200)
-    expect(res_update.body).toHaveProperty('success')
-    expect(res_update.body.success).toBe(true)
+    expect(res_delete.statusCode).toBe(200)
+    expect(res_delete.body).toHaveProperty('success')
+    expect(res_delete.body.success).toBe(true)
+
+    const check = await request
+      .get(`/api/todolist/${res.body.todolist.id}`)
+      .send()
+
+    expect(check.statusCode).toBe(200)
+    expect(check.body).toHaveProperty('success')
+    expect(check.body.success).toBe(true)
   })
 
 })
