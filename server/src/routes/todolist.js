@@ -122,6 +122,13 @@ router.post('/api/todolist/:id', async (req, res) => {
 
   const todolist = await todolists.model.findById(req.params.id)
 
+  if (!req.body.title) {
+    return res.send({
+      success: false,
+      errors: ["title is required"],
+    })
+  }
+
   const task = await todolist.tasks.create({
     title: req.body.title
   })
