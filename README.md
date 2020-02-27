@@ -22,3 +22,13 @@ docker-compose up
 ```
 
 It will use local `client` and `server` files and automatically takes code changes.
+
+# Deployment
+For production we use a specific configuration of `docker-compose` but it's still very similar to the development environment.
+
+```bash
+docker-compose build --no-cache
+docker-compose -f docker-compose.yml -f production.yml up -d
+```
+
+The `production.yml` file contains the production's configuration differences compared to `docker-compose.yml`.
