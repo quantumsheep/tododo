@@ -108,8 +108,6 @@ describe('Endpoints for todolist', () => {
       .get(`/api/todolist/${res.body.todolist.id}`)
       .send()
 
-    console.log(result.body)
-
     expect(check.statusCode).toBe(200)
     expect(check.body).toHaveProperty('success')
     expect(check.body.success).toBe(true)
@@ -117,4 +115,30 @@ describe('Endpoints for todolist', () => {
     expect(check.body.todolist.title).toBe('title updated')
   })
 
+  it('should create a new task for a specific todolist', async () => {
+    const res = await request
+      .post('/api/todolist')
+      .send({
+        title: 'test 5',
+      })
+    
+      const result = await request
+      .post(`/api/todolist/${res.body.todolist.id}`)
+      .send({
+        title: 'new task',
+      })
+
+      expect(result.statusCode).toBe(200)
+      expect(result.body).toHaveProperty('success')
+      expect(result.body.success).toBe(true)
+      expect(result.body).toHaveProperty('task')
+      expect(result.body.task.title).toBe('new task')
+
+      const check = await request
+        .get(`/api/todolist/${res.body.todolist.id}`)
+        .send()
+        
+      expect(check.statusCode).toBe(200)
+      expect(check.body.todolist.tasks.length).toBe(1)
+  })
 })
