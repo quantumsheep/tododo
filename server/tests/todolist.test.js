@@ -1,7 +1,61 @@
 import supertest from 'supertest'
 import { app } from '../src/app'
+import db, { memory_server, connect as db_connect } from "../src/db"
+import * as todolist from '../src/models/todolist'
 
 const request = supertest(app)
+
+/**
+ * Connect to a new in-memory database before running any tests.
+ */
+beforeAll(async () => await db_connect())
+
+/**
+ * Clear all test data after every test.
+ */
+afterEach(async () => {
+    const collections = Object.values(db.connection.collections)
+    await Promise.all(collections.map(c => c.deleteMany()))
+})
+
+/**
+ * Remove and close the db and server.
+ */
+afterAll(async () => {
+    await db.connection.dropDatabase()
+    await db.connection.close()
+    await memory_server.stop()
+})
+
+/**
+ * Todolist test suite.
+ */
+describe('todolist', () => {
+
+    it('can be created correctly', () => {
+        expect.assertions(1)
+        return expect(todolist.model.create({
+            title: 'tototo',
+        })).resolves.not.toThrow()
+    })
+
+    it('can be updated correctly', () => {
+        expect.assertions(1)
+        return expect(todolist.model.updateMany({
+            title: 'tototo',
+        }, {
+            checked: true,
+        })).resolves.not.toThrow()
+    })
+
+    it('can be deleted correctly', () => {
+        expect.assertions(1)
+        return expect(todolist.model.deleteMany({
+            title: 'tototo',
+        })).resolves.not.toThrow()
+    })
+})
+
 
 describe('Endpoints for todolist', () => {
 
@@ -14,8 +68,8 @@ describe('Endpoints for todolist', () => {
     expect(res.statusCode).toEqual(200)
     expect(res.body).toHaveProperty('success')
     expect(res.body.success).toBe(true)
-    expect(check.body).toHaveProperty('todolist')
-    expect(result.body.todolist.title).toBe('test 2')
+    expect(res.body).toHaveProperty('todolist')
+    expect(res.body.todolist.title).toBe('test 1')
   })
 
   it('should not create a new todolist if title missing', async () => {
@@ -52,7 +106,26 @@ describe('Endpoints for todolist', () => {
     expect(result.body.todolist.title).toBe('test 2')
   })
 
-  it('should get all todolists', async () => {
+  it('should get 3 todolists', async () => {
+
+    const todo_1 = await request
+      .post('/api/todolist')
+      .send({
+        title: 'test 1',
+      })
+
+    const todo_2 = await request
+      .post('/api/todolist')
+      .send({
+        title: 'test 2',
+      })
+
+    const todo_3 = await request
+      .post('/api/todolist')
+      .send({
+        title: 'test 3',
+      })
+
     const res = await request
       .get('/api/todolist')
       .send()
@@ -62,7 +135,21 @@ describe('Endpoints for todolist', () => {
     expect(res.body.success).toBe(true)
     expect(res.body).toHaveProperty('todolists')
     expect(Array.isArray(res.body.todolists)).toBe(true)
-    expect(res.body.todolists.length).toBe(2)
+    expect(res.body.todolists.length).toBe(3)
+  })
+
+  it('should get all todolists', async () => {
+
+    const res = await request
+      .get('/api/todolist')
+      .send()
+
+    expect(res.statusCode).toBe(200)
+    expect(res.body).toHaveProperty('success')
+    expect(res.body.success).toBe(true)
+    expect(res.body).toHaveProperty('todolists')
+    expect(Array.isArray(res.body.todolists)).toBe(true)
+    expect(res.body.todolists.length).toBe(0)
   })
 
   it('should delete a specific todo', async () => {
