@@ -51,7 +51,7 @@ export default class Lists extends React.Component {
 
   change_todolist_name = async (id) => {
     try {
-      const res = await axios.put(`/api/todolist/${id}`, {
+      await axios.put(`/api/todolist/${id}`, {
         title: this.state.todolist_titles[id]
       })
     } catch (e) {
@@ -100,7 +100,7 @@ export default class Lists extends React.Component {
     return (
       <div>
         {this.state.todolists.map(todolist => (
-          <div key={todolist.id}>
+          <div key={todolist.id} className="container">
             <form onSubmit={e => {
               e.preventDefault()
               this.change_todolist_name(todolist.id)
