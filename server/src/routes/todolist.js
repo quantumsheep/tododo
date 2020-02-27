@@ -178,3 +178,36 @@ router.put('/api/todolist/:todolist_id/:task_id', async (req, res) => {
     success: true,
   })
 })
+
+router.put('/api/todolist/:todolist_id/:task_id/check', async (req, res) => {
+  if (!req.params.todolist_id) {
+    return res.send({
+      success: false,
+      errors: ["todolist id is required"],
+    })
+  }
+  else if (!req.params.task_id) {
+    return res.send({
+      success: false,
+      errors: ["task id is required"],
+    })
+  }
+  else if (!req.body.checked && !typeof req.body.checked === "boolean") {
+    return res.send({
+      success: false,
+      errors: ["title is required"],
+    })
+  }
+  
+  await todolists.model.findOneAndUpdate(
+    { "_id": req.params.todolist_id, "tasks._id": req.params.task_id },
+    {
+      "$set": {
+        "tasks.$.checked": req.body.checked
+      }
+    })
+
+  res.send({
+    success: true,
+  })
+})
