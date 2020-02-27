@@ -6,5 +6,3 @@ COPY "package.json" .
 
 RUN npm i
 RUN npm rebuild
-
-CMD [ "npm", "start" ]

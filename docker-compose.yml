@@ -2,6 +2,7 @@ version: "3"
 services:
   client:
     build: ./client
+    command: npm start
     container_name: tododo-client
     volumes:
       - ./client:/usr/src/app/client
