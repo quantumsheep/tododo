@@ -1,12 +1,11 @@
 import supertest from 'supertest'
 import { app } from '../src/app'
-import * as todolists from '../src/models/todolist'
 
 const request = supertest(app)
 
 describe('Endpoints for todolist', () => {
 
-  it('should create a new todolist', async () => {
+  it('should create a new todolist named test 1', async () => {
     const res = await request
       .post('/api/todolist')
       .send({
@@ -15,9 +14,11 @@ describe('Endpoints for todolist', () => {
     expect(res.statusCode).toEqual(200)
     expect(res.body).toHaveProperty('success')
     expect(res.body.success).toBe(true)
+    expect(check.body).toHaveProperty('todolist')
+    expect(result.body.todolist.title).toBe('test 2')
   })
 
-  it('should not create a new todolist', async () => {
+  it('should not create a new todolist if title missing', async () => {
     const res = await request
       .post('/api/todolist')
       .send()
@@ -25,9 +26,10 @@ describe('Endpoints for todolist', () => {
     expect(res.body).toHaveProperty('success')
     expect(res.body).toHaveProperty('errors')
     expect(res.body.success).toBe(false)
+    expect(res.body.errors[0]).toBe('title is required')
   })
 
-  it('should create a new todolist', async () => {
+  it('should create a new todolist named test 2', async () => {
     const res = await request
       .post('/api/todolist')
       .send({
@@ -50,7 +52,7 @@ describe('Endpoints for todolist', () => {
     expect(result.body.todolist.title).toBe('test 2')
   })
 
-  it('should get all the todolists', async () => {
+  it('should get all todolists', async () => {
     const res = await request
       .get('/api/todolist')
       .send()
