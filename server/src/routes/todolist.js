@@ -110,3 +110,31 @@ router.put('/api/todolist/:id', async (req, res) => {
     success: true,
   })
 })
+
+router.post('/api/todolist/:id', async (req, res) => {
+
+  if (!req.params.id) {
+    return res.send({
+      success: false,
+      errors: ["id is required"],
+    })
+  }
+
+  const todolist = await todolists.model.findById(req.params.id)
+
+  const task = await todolist.tasks.create({
+    title: req.body.title
+  })
+
+  todolist.tasks.push(task)
+  todolist.save()
+
+  res.send({
+    success: true,
+    task: {
+      id: task._id,
+      title: task.title,
+      checked: task.checked,
+    },
+  })
+})
