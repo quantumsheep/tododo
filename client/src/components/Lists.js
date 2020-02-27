@@ -18,7 +18,7 @@ export default class Lists extends React.Component {
     todolist_titles: {},
   }
 
-  async componentDidMount() {
+  load_todolists = async () => {
     try {
       const { data: { todolists } } = await axios.get('/api/todolist')
       const todolist_titles = todolists.reduce((obj, todolist) => {
@@ -33,6 +33,10 @@ export default class Lists extends React.Component {
     } catch (e) {
       console.error(e)
     }
+  }
+
+  async componentDidMount() {
+    await this.load_todolists()
   }
 
   delete_todolist = async (id) => {
@@ -96,17 +100,25 @@ export default class Lists extends React.Component {
     }
   }
 
+  get_todolist_check = (todolist) => {
+    for (const task in todolist.tasks) {
+      if (!task.checked) {
+        return false
+      }
+    }
+    return true
+  }
+
   render() {
     return (
       <div className="container">
-        Liste de Todolist : 
+        Liste de Todolist :
         {this.state.todolists.map(todolist => (
           <div key={todolist.id}>
             <form onSubmit={e => {
               e.preventDefault()
               this.change_todolist_name(todolist.id)
             }}>
-              <input type="checkbox" checked={todolist.checked} disabled={true}></input>
               <input
                 type="text"
                 value={this.state.todolist_titles[todolist.id] || ""}
