@@ -3,7 +3,6 @@ const router = Router()
 export default router
 
 import * as todolists from '../models/todolist'
-import { todolist } from '../routes'
 
 router.get('/api/todolist', async (req, res) => {
 

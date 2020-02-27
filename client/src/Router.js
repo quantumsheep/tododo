@@ -5,7 +5,6 @@ import {
   Route,
 } from "react-router-dom"
 
-import Index from "./views/Index"
 import Lists from "./components/Lists"
 import TodoList from "./components/TodoList"
 
