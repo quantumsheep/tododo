@@ -5,7 +5,7 @@ import body_parser from 'body-parser'
 
 import * as routes from './routes'
 
-const app = express()
+export const app = express()
 
 app.set('trust proxy', true)
 
@@ -20,10 +20,10 @@ const client = path.resolve(__dirname, '../..', 'client/build')
 app.use(express.static(client))
 
 app.use('*', (req, res) => {
-  res.status(404).send({
-    error: '404 Not Found',
-  })
+  res.sendFile(path.resolve(client, 'index.html'))
 })
 
-const port = process.env.PORT || 3000
-app.listen(port, () => console.log(`Running on http://localhost:${port}`))
+if (process.env.JEST_WORKER_ID === undefined) {
+  const port = process.env.PORT || 3000
+  app.listen(port, () => console.log(`Running on http://localhost:${port}`))
+}

@@ -5,13 +5,17 @@ import {
   Route,
 } from "react-router-dom"
 
-import Index from "./views/Index"
+import Lists from "./components/Lists"
+import TodoList from "./components/TodoList"
 
 export default () => (
   <Router>
     <Switch>
-      <Route path="/">
-        <Index />
+      <Route path="/" exact>
+        <Lists />
+      </Route>
+      <Route path="/:id">
+        <TodoList/>
       </Route>
     </Switch>
   </Router >
