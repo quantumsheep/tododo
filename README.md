@@ -24,6 +24,9 @@ docker-compose up
 It will use local `client` and `server` files and automatically takes code changes.
 
 # Deployment
+Every methods bellow needs to have a clone of this repository on the server Tododo is meant to be installed.
+
+## Using `docker-compose`
 For production we use a specific configuration of `docker-compose` but it's still very similar to the development environment.
 
 ```bash
@@ -32,3 +35,16 @@ docker-compose -f docker-compose.yml -f production.yml up -d
 ```
 
 The `production.yml` file contains the production's configuration differences compared to `docker-compose.yml`.
+
+## Using a Docker image
+To get the image you'll need to build it with `docker build`:
+```bash
+docker build -t tododo .
+```
+
+Then run it like a regular container:
+```bash
+docker run -p 3000:3000 --name tododo -d tododo
+```
+
+It will need to access a MongoDB server from the port `27017`, you can provide it by changing the newly created container to a specific network if you have a MongoDB container. You can also create your own `docker-compose.yml` configuration that match your needs.
