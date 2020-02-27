@@ -121,42 +121,66 @@ describe('Endpoints for todolist', () => {
       .send({
         title: 'test 5',
       })
-    
-      const result = await request
+
+    const result = await request
       .post(`/api/todolist/${res.body.todolist.id}`)
       .send({
         title: 'new task',
       })
 
-      expect(result.statusCode).toBe(200)
-      expect(result.body).toHaveProperty('success')
-      expect(result.body.success).toBe(true)
-      expect(result.body).toHaveProperty('task')
-      expect(result.body.task.title).toBe('new task')
+    expect(result.statusCode).toBe(200)
+    expect(result.body).toHaveProperty('success')
+    expect(result.body.success).toBe(true)
+    expect(result.body).toHaveProperty('task')
+    expect(result.body.task.title).toBe('new task')
 
-      const check = await request
-        .get(`/api/todolist/${res.body.todolist.id}`)
-        .send()
+    const check = await request
+      .get(`/api/todolist/${res.body.todolist.id}`)
+      .send()
 
-      expect(check.statusCode).toBe(200)
-      expect(check.body.todolist.tasks.length).toBe(1)
-      expect(check.body.todolist.tasks[0]).toHaveProperty('title')
-      expect(check.body.todolist.tasks[0].title).toBe('new task')
+    expect(check.statusCode).toBe(200)
+    expect(check.body.todolist.tasks.length).toBe(1)
+    expect(check.body.todolist.tasks[0]).toHaveProperty('title')
+    expect(check.body.todolist.tasks[0].title).toBe('new task')
   })
-  
+
   it('should not create a new task for a specific todolist if title is empty', async () => {
     const res = await request
       .post('/api/todolist')
       .send({
         title: 'test 6',
       })
-    
-      const result = await request
+
+    const result = await request
       .post(`/api/todolist/${res.body.todolist.id}`)
       .send()
 
-      expect(result.statusCode).toBe(200)
-      expect(result.body).toHaveProperty('success')
-      expect(result.body.success).toBe(false)
+    expect(result.statusCode).toBe(200)
+    expect(result.body).toHaveProperty('success')
+    expect(result.body.success).toBe(false)
+  })
+
+  it('should update new task for a specific todolist', async () => {
+    const res = await request
+      .post('/api/todolist')
+      .send({
+        title: 'test 7',
+      })
+
+    const result = await request
+      .post(`/api/todolist/${res.body.todolist.id}`)
+      .send({
+        title: 'new task',
+      })
+
+    const res_update = await request
+      .put(`/api/todolist/${res.body.todolist.id}/${result.body.task.id}`)
+      .send({
+        title: 'my new title',
+      })
+
+    expect(res_update.statusCode).toBe(200)
+    expect(res_update.body).toHaveProperty('success')
+    expect(res_update.body.success).toBe(true)
   })
 })
