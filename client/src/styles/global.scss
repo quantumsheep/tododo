@@ -1,6 +1,46 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap");
+
+@mixin remove-default-appearance {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+
+  border: none;
+  background-image: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+@mixin material-box-shadow {
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -ms-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -o-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100vh;
+}
+
 body {
-  background: #0a0711;
+  font-family: "Source Sans Pro", sans-serif;
+
+  height: 100%;
+
   color: #f1f1f1;
+
+  background: #0a041c;
+  background: -webkit-linear-gradient(135deg, #0a041c, #110939, #1b0a42);
+  background: linear-gradient(135deg, #0a041c, #110939, #1b0a42);
 }
 
 .container {
@@ -8,4 +48,53 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+input {
+  &:not([type="checkbox"]) {
+    @include remove-default-appearance;
+
+    background-color: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  border-bottom: solid 1px rgba(241, 241, 241, 0.5);
+  padding: 5px;
+
+  margin: 5px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+
+  color: #080808;
+}
+
+button {
+  @include remove-default-appearance;
+  @include material-box-shadow;
+
+  background: #ca792b;
+  background: -webkit-linear-gradient(135deg, #ca792b, #811d17);
+  background: linear-gradient(135deg, #ca792b, #811d17);
+  color: inherit;
+
+  border-radius: 3px;
+  padding: 5px 16px;
+
+  margin: 5px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+
+  transition: all 0.2s;
+
+  &:hover {
+    cursor: pointer;
+
+    transform: scale(1.05);
+  }
+}
+
+a {
+  @include remove-default-appearance;
+
+  color: inherit;
 }
